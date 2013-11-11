@@ -47,4 +47,6 @@ The method does assume that you have stored your data in per-sample (exome and l
 
 You will need suitable scratch space (specified as `scratch`) on the nodes where you execute the script.  If this is not available, the glia and freebayes components can run on purely streamed data at a cost of doubled runtime memory requirements.  If this is the case, you will need to modify the `run_region.sh` script to not write the temporary file.  Please contact me if this is necessary.
 
+You will also need enough memory.  In this alignment data, glia and freebayes will rarely use more than 4-5Gb at runtime.  You can detect such failures by grepping for out-of-memory errors ("bad alloc"s) in the `*.err` files.
+
 In practice, I use a set of targets that have approximately equal amounts of sequencing data in them (this was estimated from ~20 exome and ~20 low coverage files).  This kind of even partitioning can improve performance, but again this is possibly system-dependent and thus the merging strategy is left up to the user.
