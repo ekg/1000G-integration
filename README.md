@@ -12,8 +12,11 @@ First, use git to clone the repository:
 
 Note the use of `--recursive`, this ensures that the many submodules included in the project are correctly cloned as well.
 
-Build using make.  Executables (`freebayes` and `glia`) will be in `bin/`.  You should either put these in
-your path or modify scripts/run\_region.sh to reflect their location.
+Build using make.  Executables (`freebayes` and `glia`) will be in `bin/`.  You should modify scripts/run\_region.sh to reflect their location, e.g.:
+
+    ## Change this to your 1000G-integration directory, or unset if
+    ## you put freebayes and glia into your system-wide path:
+    bin=/path/to/1000G-integration/bin
 
 You will also need samtools.  In my tests, I used version 0.1.19-44428cd.
 

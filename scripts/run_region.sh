@@ -7,6 +7,10 @@ then
     exit
 fi
 
+## Change this to your 1000G-integration directory, or remove if
+## you put freebayes and glia into your system-wide path:
+bin=/share/home/erik/1000G-integration/bin
+
 outdir=$1
 reference=$2
 region=$3
@@ -41,13 +45,13 @@ expandedregion="$chrom:$begin-$end"
 # exome and low-coverage data across all samples.
 
 $merger $expandedregion \
-    | glia -Rr -w 1000 -S 200 -Q 200 -G 4 -f $reference -v $union \
+    | $bin/glia -Rr -w 1000 -S 200 -Q 200 -G 4 -f $reference -v $union \
         2>$outdir/$region.glia.err \
     | samtools view -b - >$realigned_bam
 
 samtools index $realigned_bam 2>$outdir/$region.samtools.index.err
 
-freebayes -f $reference --region $region \
+$bin/freebayes -f $reference --region $region \
         --min-alternate-fraction 0.2 \
         --min-alternate-count 2 \
         --min-mapping-quality 1 \
