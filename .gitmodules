@@ -1,0 +1,6 @@
+[submodule "freebayes"]
+	path = freebayes
+	url = git://github.com/ekg/freebayes.git
+[submodule "glia"]
+	path = glia
+	url = git://github.com/ekg/glia.git
