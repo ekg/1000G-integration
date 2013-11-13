@@ -44,10 +44,14 @@ expandedregion="$chrom:$begin-$end"
 # files.  For the distributed GL compute, the input should be a merge of all
 # exome and low-coverage data across all samples.
 
+# Note conversion to and from SAM, done to ensure correct bin labeling of alignemnts.
+# This may not be necessary for correct operation, but it resolves error messages.
+
 $merger $expandedregion \
     | $bin/glia -Rr -w 1000 -S 200 -Q 200 -G 4 -f $reference -v $union \
         2>$outdir/$region.glia.err \
-    | samtools view -b - >$realigned_bam
+    | samtools view -h - \
+    | samtools view -Sb - >$realigned_bam
 
 samtools index $realigned_bam 2>$outdir/$region.samtools.index.err
 
