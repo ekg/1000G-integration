@@ -37,9 +37,9 @@ This will generate `outdir/region.vcf.gz` in gzip format, along with a number of
 
 The `cnvmap` and `contamination` estimate files for the 2535 samples in the
 1000G release are both in `resources/`.  The 1000 Genomes reference should be
-used here.  You will also need to download the whole-genome [union allele list](ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20130723_phase3_wg/union/ALL.wgs.union_from_bc.20130502.snps_indels_complex.sites.vcf.gz) and its .tbi index from the 1000 Genomes FTP site.  Supply this as `union` in the `run_region.sh` command.
+used here.  You will also need to download the whole-genome [union allele list](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20130723_phase3_wg/union/ALL.wgs.union_from_bc.20130502.snps_indels_complex.sites.vcf.gz) and its .tbi index from the 1000 Genomes FTP site.  Supply this as `union` in the `run_region.sh` command.
 
-You will also need to provide a `merge_script` which takes a genomic region in samtools format (e.g. 5:300-400).  This script should produce a merged, uncompressed BAM stream on stdout of all low-coverage and exome sequencing data mapped to the target region in the 2535 samples in the 1000G phase3.  The exact functioning of this script is likely system-dependent, so it has been left out of the distribution.
+You will also need to provide a `merge_script` which takes a genomic region in samtools format (e.g. 5:300-400).  This script should produce a merged, uncompressed BAM stream on stdout of all low-coverage and exome sequencing data mapped to the target region in the 2535 samples in the 1000G phase3.  The exact functioning of this script is likely system-dependent, but an example that performs the merge in less than 700Mb of memory is provided in the scripts directory.  This method requires a merged SAM header which has been generated with bamtools, and is provided in the resources directory.
 
 ## Considerations
 
