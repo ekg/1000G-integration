@@ -24,6 +24,7 @@ mkdir -p $outdir
 
 mkdir -p $scratch
 realigned_bam=$scratch/$region.bam
+unsorted_realigned_bam=$scratch/$region.unsorted.bam
 
 # determine expanded region, needed to remove edge effects from realignment
 overlap=500  # we should use at least half the default realignment window size
@@ -48,10 +49,13 @@ expandedregion="$chrom:$begin-$end"
 # This may not be necessary for correct operation, but it resolves error messages.
 
 $merger $expandedregion \
-    | $bin/glia -Rr -w 1000 -S 200 -Q 200 -G 4 -f $reference -v $union \
+    | $bin/glia -Rru -w 1000 -S 200 -Q 200 -G 4 -f $reference -v $union \
         2>$outdir/$region.glia.err \
     | samtools view -h - \
-    | samtools view -Sb - >$realigned_bam
+    | samtools view -Sb - >$unsorted_realigned_bam
+
+# yields $realigned_bam which is sorted
+samtools sort $unsorted_realigned_bam $scratch/$region
 
 samtools index $realigned_bam 2>$outdir/$region.samtools.index.err
 
