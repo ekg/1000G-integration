@@ -56,6 +56,7 @@ $merger $expandedregion \
 
 # yields $realigned_bam which is sorted
 samtools sort $unsorted_realigned_bam $scratch/$region
+rm -rf $unsorted_realigned_bam
 
 samtools index $realigned_bam 2>$outdir/$region.samtools.index.err
 
