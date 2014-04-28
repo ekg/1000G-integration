@@ -1,6 +1,8 @@
 #!/bin/zsh
 #
 
+if [ $# -eq 0 ]; then; cat $0; exit; fi
+
 svm_model=$1
 mvncall_vcf=$2
 freebayes_gls_vcf=$3
@@ -31,7 +33,7 @@ svm-predict -b 1 $libsvm_input_scaled $svm_model $libsvm_prediction
 svm_annotated_vcf=$(basename $mvncall_vcf .vcf.gz).libsvm.predict.svm.vcf.gz
 ( cat header.vcf
   paste <(cat $libsvm_input_tsv | tsvsplit CHROM POS REF ALT | tail -n+2 | awk 'BEGIN { OFS="\t" } { print $1, $2, ".", $3, $4, 0, "." }' ) \
-      <(tail -n+2 $libsvm_input | awk '{ print "SVM1="$2";SVM0="$3 }') ) | bgziptabix $svm_annotated_vcf
+      <(tail -n+2 $libsvm_prediction | awk '{ print "SVM1="$2";SVM0="$3 }') ) | bgziptabix $svm_annotated_vcf
 
 
 output_vcf=$(basename $mvncall_vcf .vcf.gz).$region.SVMed.sites.vcf.gz
